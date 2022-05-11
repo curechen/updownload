@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czy.shiyan4.mapper.SpaceMapper">
+  <resultMap id="BaseResultMap" type="com.czy.shiyan4.entity.Space">
+    <id column="space_id" jdbcType="INTEGER" property="id" />
+    <result column="space_space_size" jdbcType="DOUBLE" property="spaceSize" />
+    <result column="space_uid" jdbcType="INTEGER" property="uid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    space.id as space_id, space.space_size as space_space_size, space.`uid` as `space_uid`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from space space
+    where space.id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="getOneByUid" resultType="com.czy.shiyan4.entity.Space">
+      select * from space where uid = #{uid}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from space
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.czy.shiyan4.entity.Space" useGeneratedKeys="true">
+    insert into space (space_size, `uid`)
+    values (#{spaceSize,jdbcType=DOUBLE}, #{uid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.czy.shiyan4.entity.Space" useGeneratedKeys="true">
+    insert into space
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="spaceSize != null">
+        space_size,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="spaceSize != null">
+        #{spaceSize,jdbcType=DOUBLE},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.czy.shiyan4.entity.Space">
+    update space
+    <set>
+      <if test="spaceSize != null">
+        space_size = #{spaceSize,jdbcType=DOUBLE},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.czy.shiyan4.entity.Space">
+    update space
+    set space_size = #{spaceSize,jdbcType=DOUBLE},
+      `uid` = #{uid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

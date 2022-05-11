@@ -1,0 +1,25 @@
+@import "./normalize.css";
+* {
+  margin: 0;
+  padding: 0;
+
+  /* 禁止选中 */
+  -moz-user-select: none;/*火狐*/
+  -webkit-user-select: none;/*webkit浏览器*/
+  -ms-user-select: none;/*IE10*/
+  -khtml-user-select: none;/*早期浏览器*/
+  user-select: none;
+}
+
+body {
+  background-image: url(~assets/image/night.png);
+  background-size: cover;
+  /* background-position: center; */
+  -webkit-background-size: cover;
+  /* 使背景图片固定不随其他内容的移动而移动，防止出现因为放大缩小而出现的一些错误 */
+  background-attachment: fixed;
+}
+
+ul li {
+  list-style: none;
+}

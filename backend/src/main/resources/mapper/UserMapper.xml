@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czy.shiyan4.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.czy.shiyan4.entity.User">
+        <id column="user_id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="name"/>
+        <result column="user_username" jdbcType="VARCHAR" property="username"/>
+        <result column="user_password" jdbcType="VARCHAR" property="password"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        user.id as user_id, user.`name` as `user_name`, user.username as user_username, user.`password` as `user_password`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user user
+        where user.id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getUserByName" resultType="com.czy.shiyan4.entity.User">
+        select *
+        from user
+        where username = #{username}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.czy.shiyan4.entity.User"
+            useGeneratedKeys="true">
+        insert into user (`name`, username, `password`)
+        values (#{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.czy.shiyan4.entity.User"
+            useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.czy.shiyan4.entity.User">
+        update user
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.czy.shiyan4.entity.User">
+        update user
+        set `name`     = #{name,jdbcType=VARCHAR},
+            username   = #{username,jdbcType=VARCHAR},
+            `password` = #{password,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
